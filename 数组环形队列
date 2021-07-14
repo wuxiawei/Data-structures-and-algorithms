@@ -1,0 +1,74 @@
+class CircleArrayQueue{
+    private int maxSize; // 表示数组的最大容量
+    private int front; // 队列头
+    private int rear; // 队列尾
+    private int[] arr; // 该数据用于存放数据, 模拟队列
+
+    public CircleArrayQueue(int len){
+        maxSize = len;
+        front = 0;
+        rear = 0;
+        arr = new int[maxSize];
+
+    }
+
+    //判断队列是否为满
+    public boolean isFull(){
+        if((rear + 1) % maxSize == front) return true;
+        return false;
+    }
+
+    //判断队列是否为空
+    public boolean isEmpty(){
+        if(rear == front) return true;
+        return false;
+    }
+
+    //数据个数
+    public int size(){
+        return (rear + maxSize - front) % front;
+    }
+
+    //加入数据
+    public void addQueueData(int data){
+        // 判断队列是否满
+        if (isFull()) {
+            System.out.println("队列满，不能加入数据~");
+            return;
+        }
+        arr[rear] = data;
+        rear = (rear + 1) % maxSize;
+    }
+
+    //取出数据
+    public int getQueueData(){
+        // 判断队列是否空
+        if (isEmpty()) {
+            throw new RuntimeException("队列为空，没有数据");
+        }
+        int value = arr[front];
+        front = (front + 1) % maxSize;
+        return value;
+    }
+
+    //显示所有数据
+    public void viewQueueData() {
+        // 判断队列是否空
+        if (isEmpty()) {
+            throw new RuntimeException("队列为空，没有数据");
+        }
+        for (int i = front; i < front + size(); i++) {
+            System.out.printf("arr[%d]=%d\n", i % maxSize, arr[i % maxSize]);
+        }
+    }
+
+    // 显示队列的头数据， 注意不是取出数据
+    public int headQueue() {
+        // 判断
+        if (isEmpty()) {
+            throw new RuntimeException("队列空的，没有数据~~");
+        }
+        return arr[front];
+    }
+
+}
